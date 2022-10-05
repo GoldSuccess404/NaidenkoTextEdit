@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/NewProject.png</file>
+        <file>images/CloseProject.png</file>
+        <file>images/NewFile.png</file>
+        <file>images/OpenProject.png</file>
+        <file>images/main.png</file>
+        <file>images/cppFile.png</file>
+        <file>images/headerFile.png</file>
+        <file>images/mark.png</file>
+        <file>images/markLight.png</file>
+    </qresource>
+</RCC>

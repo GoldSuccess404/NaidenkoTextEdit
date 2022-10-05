@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/hello">
+        <file>hello World/helloWorld.cpp</file>
+    </qresource>
+</RCC>
