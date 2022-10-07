@@ -406,46 +406,56 @@ void MenuWind::newProject()
 
 void MenuWind::createNewProgect(QString name)
 {
-   QDir().mkdir(name);
-   //создали проект
-   check=false;
-   createProject=true;
-   file1->setDirPath(name);
+    QDir().mkdir(name);
+    //создали проект
+    check=false;
+    createProject=true;
+    file1->setDirPath(name);
 
-   QFile file(":/hello/hello World/helloWorld.cpp");
-   if (!file.open(QFile::ReadOnly | QFile::Text)) return;
+    QFile file(":/hello/hello World/helloWorld.cpp");
+    if (!file.open(QFile::ReadOnly | QFile::Text)) return;
+    QTextStream stream(&file);
 
-   QTextStream stream(&file);
-   QTextEdit *textEdit = new QTextEdit(this);
-   textEdit->setText(stream.readAll());
-   file.close();
+    /*создание файла*/
+     QDir dir(file1->getDirPath());
 
-   /*стили*/
-   if (side->theme){
-      textEdit->setStyleSheet(styleHelper::getDarkThemeTextEdit());
-      new darkHighlighting(textEdit->document());
-   }
-   else {
-      textEdit->setStyleSheet(styleHelper::getStyleTextEdit());
-      new highlighting(textEdit->document());
-   }
-   QFont font("Lucida Console", 14);
-   textEdit->setFont(font);
+     if(dir.exists()){
+         QFile fil(file1->getDirPath() + "/main.cpp");
+         if(!fil.open(QFile::WriteOnly)) return;
+         QTextStream s(&fil);
+         s << stream.readAll();
+
+         //добавление пути к файлу
+         file1->setFilePath(file1->getDirPath() + "/main.cpp");
+         fil.close();
+     }
+    file.close();
+
+    QFile fileMain(file1->getDirPath() + "/main.cpp");
+    if (!fileMain.open(QFile::ReadOnly)) return;
+    QTextStream mainStream(&fileMain);
+    QTextEdit *textEdit = new QTextEdit(this);
+
+    /*стили*/
+    if (side->theme){
+       textEdit->setStyleSheet(styleHelper::getDarkThemeTextEdit());
+       new darkHighlighting(textEdit->document());
+    }
+    else {
+       textEdit->setStyleSheet(styleHelper::getStyleTextEdit());
+       new highlighting(textEdit->document());
+    }
+    QFont font("Lucida Console", 14);
+    textEdit->setFont(font);
 
 
-  /*создание файла*/
-   QDir dir(file1->getDirPath());
-   bool ok = dir.exists();
+    textEdit->setText(mainStream.readAll());
+    fileMain.close();
 
-   if(ok){
-       QFile fil(file1->getDirPath() + "/main.cpp");
-       if(!fil.open(QFile::WriteOnly)) return;
-       fil.close();
-   }
-   //добавление пути к файлу
-   file1->setFilePath(file1->getDirPath() + "/main.cpp");
-   //добавление в лист
-   emit side->addElemnt("main.cpp", textEdit, QFileInfo(name).fileName());
+
+
+    //добавление в лист
+    emit side->addElemnt("main.cpp", textEdit, QFileInfo(name).fileName());
 }
 
 

@@ -18,7 +18,6 @@ void file::openFile(bool ok)
  QFile file(filePath.at(i));
 
  if(!file.open(QFile::ReadOnly | QFile::Text)){
-     qDebug() << file.errorString();
      return;
  }
  dirPath = str;
@@ -43,7 +42,6 @@ void file::openDark()
     QFile file(filePath.at(i));
 
     if(!file.open(QFile::ReadOnly | QFile::Text)){
-        qDebug() << file.errorString();
         return;
     }
     QTextStream stream(&file);
@@ -66,7 +64,6 @@ void file::openLight()
     QFile file(filePath.at(i));
 
     if(!file.open(QFile::ReadOnly | QFile::Text)){
-        qDebug() << file.errorString();
         return;
     }
     QTextStream stream(&file);
