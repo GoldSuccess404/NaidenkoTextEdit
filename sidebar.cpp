@@ -253,7 +253,7 @@ bool sideBar::isSavedProject()
 /*стили*/
 void sideBar::setInterface()
 {
-   listWid->setFixedSize(300, 785);
+   listWid->setFixedWidth(300);
 
    lab1->setFixedHeight(50);
    QFont font("Verdana", 17, QFont::Bold);
